@@ -1,0 +1,58 @@
+﻿<Window x:Class="WpfPainter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfPainter"
+        mc:Ignorable="d"
+        Title="Painter" Height="320" Width="600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Canvas x:Name="paintCanvas" Grid.Column="1" 
+                Background="White" Margin="0" 
+                MouseMove="canvasMouseMove"
+                MouseLeftButtonDown="mouseLeftDown"
+                MouseRightButtonDown="mouseRightDown"
+                MouseLeftButtonUp="mouseLeftUp"
+                MouseRightButtonUp="mouseLeftUp" />
+
+        <StackPanel Grid.Column="0" Margin="3" 
+            Background="Lime">
+            <GroupBox Header="Color" Margin="3">
+                <StackPanel Margin="3">
+                    <RadioButton x:Name="red" Content="Red"
+                        Margin="3" Checked="colorChoice"/>
+                    <RadioButton x:Name="blue" Content="Blue"
+                        Margin="3" Checked="colorChoice"/>
+                    <RadioButton x:Name="green" Content="Green"
+                        Margin="3" Checked="colorChoice"/>
+                    <RadioButton x:Name="black" Content="Black"
+                        Margin="3" Checked="colorChoice"
+                           IsChecked="True"/>
+                </StackPanel>                
+            </GroupBox>
+
+            <GroupBox Header="Size" Margin="3">
+                <StackPanel Margin="3">
+                    <RadioButton x:Name="small" Content="Small"
+                        Margin="3" Checked="sizeChoice"/>
+                    <RadioButton x:Name="medium" Content="Medium"
+                        Margin="3" Checked="sizeChoice"
+                        IsChecked="True" />
+                    <RadioButton x:Name="large" Content="Large"
+                        Margin="3" Checked="sizeChoice"/>
+                </StackPanel>
+            </GroupBox>
+
+            <Button x:Name="undo" Content="Undo"
+                Width="80" Margin="3" Click="undoPaint"/>
+
+            <Button x:Name="clear" Content="Clear"
+                Width="80" Margin="3" Click="clearPaint"/>
+        </StackPanel>
+    </Grid>
+</Window>
