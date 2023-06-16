@@ -14,11 +14,7 @@
 
         <Canvas x:Name="paintCanvas" Grid.Column="1" 
                 Background="White" Margin="0" 
-                MouseMove="canvasMouseMove"
-                MouseLeftButtonDown="mouseLeftDown"
-                MouseRightButtonDown="mouseRightDown"
-                MouseLeftButtonUp="mouseLeftUp"
-                MouseRightButtonUp="mouseLeftUp" />
+                MouseMove="canvasMouseMove" />
 
         <StackPanel Grid.Column="0" Margin="3" 
             Background="Lime">
@@ -52,7 +48,7 @@
                 Width="80" Margin="3" Click="undoPaint"/>
 
             <Button x:Name="clear" Content="Clear"
-                Width="80" Margin="3" Click="clearPaint"/>
+                Width="80" Margin="3"/>
         </StackPanel>
     </Grid>
 </Window>

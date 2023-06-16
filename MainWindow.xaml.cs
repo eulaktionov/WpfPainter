@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace WpfPainter
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         enum Sizes
@@ -33,32 +30,15 @@ namespace WpfPainter
         public MainWindow()
         {
             InitializeComponent();
+
+            paintCanvas.MouseLeftButtonDown += (s, e) => shouldPaint = true;
+            paintCanvas.MouseRightButtonDown += (s, e) => shouldErase = true;
+            paintCanvas.MouseLeftButtonUp += (s, e) => shouldPaint = false;
+            paintCanvas.MouseRightButtonUp += (s, e) => shouldErase = false;
+
+            clear.Click += (s, e) => paintCanvas.Children.Clear();
         }
 
-        void canvasMouseMove(object sender, MouseEventArgs e)
-        {
-            if (shouldPaint || shouldErase)
-            {
-                DrawPoint(e.GetPosition(paintCanvas),
-                    shouldPaint ? brush : paintCanvas.Background);
-            }
-        }
-        void mouseLeftDown(object sender, MouseEventArgs e)
-        {
-            shouldPaint = true;
-        }
-        void mouseRightDown(object sender, MouseEventArgs e)
-        {
-            shouldErase = true;
-        }
-        void mouseLeftUp(object sender, MouseEventArgs e)
-        {
-            shouldPaint = false;
-        }
-        void mouseRighttUp(object sender, MouseEventArgs e)
-        {
-            shouldErase = false;
-        }
         void colorChoice(object sender, RoutedEventArgs e)
         {
             brush = (bool)red.IsChecked ? Brushes.Red
@@ -67,23 +47,21 @@ namespace WpfPainter
                 : Brushes.Black;
 
         }
+
         void sizeChoice(object sender, RoutedEventArgs e)
         {
             diameter = (int)((bool)small.IsChecked ? Sizes.Small
                 : (bool)medium.IsChecked ? Sizes.Medium
                 : Sizes.Large);
         }
-        void undoPaint(object sender, RoutedEventArgs e)
+
+        void canvasMouseMove(object sender, MouseEventArgs e)
         {
-            int count = paintCanvas.Children.Count;
-            if(count > 0)
+            if(shouldPaint || shouldErase)
             {
-                paintCanvas.Children.RemoveAt(count - 1);
+                DrawPoint(e.GetPosition(paintCanvas),
+                    shouldPaint ? brush : paintCanvas.Background);
             }
-        }
-        void clearPaint(object sender, RoutedEventArgs e)
-        {
-            paintCanvas.Children.Clear();
         }
 
         void DrawPoint(Point point, Brush brush)
@@ -98,6 +76,15 @@ namespace WpfPainter
             Canvas.SetLeft(newPoint, point.X);
             Canvas.SetTop(newPoint, point.Y);
             paintCanvas.Children.Add(newPoint);
+        }
+
+        void undoPaint(object sender, RoutedEventArgs e)
+        {
+            int count = paintCanvas.Children.Count;
+            if(count > 0)
+            {
+                paintCanvas.Children.RemoveAt(count - 1);
+            }
         }
     }
 }
